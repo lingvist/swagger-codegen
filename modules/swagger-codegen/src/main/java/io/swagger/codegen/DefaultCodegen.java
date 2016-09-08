@@ -2522,23 +2522,13 @@ public class DefaultCodegen {
     protected String getOrGenerateOperationId(Operation operation, String path, String httpMethod) {
         String operationId = operation.getOperationId();
         if (StringUtils.isBlank(operationId)) {
-            String tmpPath = path;
-            tmpPath = tmpPath.replaceAll("\\{", "");
-            tmpPath = tmpPath.replaceAll("\\}", "");
-            String[] parts = (tmpPath + "/" + httpMethod).split("/");
-            StringBuilder builder = new StringBuilder();
-            if ("/".equals(tmpPath)) {
-                // must be root tmpPath
-                builder.append("root");
-            }
-            for (String part : parts) {
-                if (part.length() > 0) {
-                    if (builder.toString().length() == 0) {
-                        part = Character.toLowerCase(part.charAt(0)) + part.substring(1);
-                    } else {
-                        part = initialCaps(part);
-                    }
-                    builder.append(part);
+            StringBuilder builder = new StringBuilder(httpMethod);
+            String[] parts = path.split("/");
+            for (String s : parts) {
+                s = s.replaceAll("\\{.+\\}", "");
+                s = s.replaceAll("[^a-zA-Z]", "");
+                if (s.length() > 0) {
+                    builder.append(initialCaps(s));
                 }
             }
             operationId = sanitizeName(builder.toString());
