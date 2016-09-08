@@ -93,7 +93,7 @@ After cloning the project, you can build it from source with this command:
 ```
 mvn clean package
 ```
-Will build jar file: modules/swagger-codegen-cli/target/swagger-codegen-cli.jar
+Will build jar file: modules/swagger-codegen-cli/target/swagger-codegen-cli.jar  
 Generating code for retrofit2:
 ```
 java -jar swagger-codegen-cli.jar generate -i swagger.yaml -l java --library=retrofit2 -c config.json -o output/
