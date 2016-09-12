@@ -2052,6 +2052,11 @@ public class DefaultCodegen {
           Collections.sort(allParams, new Comparator<CodegenParameter>() {
               @Override
               public int compare(CodegenParameter one, CodegenParameter another) {
+                  boolean onePath = one.isPathParam != null && one.isPathParam;
+                  boolean anotherPath = another.isPathParam != null && another.isPathParam;
+                  if (onePath != anotherPath) {
+                      return onePath ? -1 : 1;
+                  }
                   boolean oneRequired = one.required == null ? false : one.required;
                   boolean anotherRequired = another.required == null ? false : another.required;
                   if (oneRequired == anotherRequired) return 0;
