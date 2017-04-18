@@ -9,17 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 
 (function(root, factory) {
@@ -74,13 +63,13 @@
       var postBody = null;
 
       // verify the required parameter 'orderId' is set
-      if (orderId == undefined || orderId == null) {
-        throw "Missing the required parameter 'orderId' when calling deleteOrder";
+      if (orderId === undefined || orderId === null) {
+        throw new Error("Missing the required parameter 'orderId' when calling deleteOrder");
       }
 
 
       var pathParams = {
-        'orderId': orderId
+        'order_id': orderId
       };
       var queryParams = {
       };
@@ -95,7 +84,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/store/order/{orderId}', 'DELETE',
+        '/store/order/{order_id}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -159,13 +148,13 @@
       var postBody = null;
 
       // verify the required parameter 'orderId' is set
-      if (orderId == undefined || orderId == null) {
-        throw "Missing the required parameter 'orderId' when calling getOrderById";
+      if (orderId === undefined || orderId === null) {
+        throw new Error("Missing the required parameter 'orderId' when calling getOrderById");
       }
 
 
       var pathParams = {
-        'orderId': orderId
+        'order_id': orderId
       };
       var queryParams = {
       };
@@ -180,7 +169,7 @@
       var returnType = Order;
 
       return this.apiClient.callApi(
-        '/store/order/{orderId}', 'GET',
+        '/store/order/{order_id}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -205,8 +194,8 @@
       var postBody = body;
 
       // verify the required parameter 'body' is set
-      if (body == undefined || body == null) {
-        throw "Missing the required parameter 'body' when calling placeOrder";
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling placeOrder");
       }
 
 

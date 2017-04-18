@@ -3,29 +3,33 @@ package io.swagger.client.api;
 import io.swagger.client.CollectionFormats.*;
 
 
+
 import retrofit2.Call;
 import retrofit2.http.*;
 
 import okhttp3.RequestBody;
 
-import io.swagger.client.model.Client;
-import org.joda.time.LocalDate;
 import java.math.BigDecimal;
+import io.swagger.client.model.Client;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public interface FakeApi {
   /**
    * To test \&quot;client\&quot; model
-   * 
+   * To test \&quot;client\&quot; model
    * @param body client model (required)
    * @return Call&lt;Client&gt;
    */
-  
+  @Headers({
+    "Content-Type:application/json"
+  })
   @PATCH("fake")
   Call<Client> testClientModel(
     @Body Client body
@@ -47,18 +51,18 @@ public interface FakeApi {
    * @param date None (optional)
    * @param dateTime None (optional)
    * @param password None (optional)
+   * @param paramCallback None (optional)
    * @return Call&lt;Void&gt;
    */
-  
   @FormUrlEncoded
   @POST("fake")
   Call<Void> testEndpointParameters(
-    @Field("number") BigDecimal number, @Field("double") Double _double, @Field("pattern_without_delimiter") String patternWithoutDelimiter, @Field("byte") byte[] _byte, @Field("integer") Integer integer, @Field("int32") Integer int32, @Field("int64") Long int64, @Field("float") Float _float, @Field("string") String string, @Field("binary") byte[] binary, @Field("date") LocalDate date, @Field("dateTime") DateTime dateTime, @Field("password") String password
+    @Field("number") BigDecimal number, @Field("double") Double _double, @Field("pattern_without_delimiter") String patternWithoutDelimiter, @Field("byte") byte[] _byte, @Field("integer") Integer integer, @Field("int32") Integer int32, @Field("int64") Long int64, @Field("float") Float _float, @Field("string") String string, @Field("binary") byte[] binary, @Field("date") LocalDate date, @Field("dateTime") DateTime dateTime, @Field("password") String password, @Field("callback") String paramCallback
   );
 
   /**
    * To test enum parameters
-   * 
+   * To test enum parameters
    * @param enumFormStringArray Form parameter enum test (string array) (optional)
    * @param enumFormString Form parameter enum test (string) (optional, default to -efg)
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
@@ -69,11 +73,10 @@ public interface FakeApi {
    * @param enumQueryDouble Query parameter enum test (double) (optional)
    * @return Call&lt;Void&gt;
    */
-  
   @FormUrlEncoded
   @GET("fake")
   Call<Void> testEnumParameters(
-    @Field("enum_form_string_array") List<String> enumFormStringArray, @Field("enum_form_string") String enumFormString, @Header("enum_header_string_array") List<String> enumHeaderStringArray, @Header("enum_header_string") String enumHeaderString, @Query("enum_query_string_array") CSVParams enumQueryStringArray, @Query("enum_query_string") String enumQueryString, @Query("enum_query_integer") BigDecimal enumQueryInteger, @Field("enum_query_double") Double enumQueryDouble
+    @Field("enum_form_string_array") List<String> enumFormStringArray, @Field("enum_form_string") String enumFormString, @Header("enum_header_string_array") List<String> enumHeaderStringArray, @Header("enum_header_string") String enumHeaderString, @Query("enum_query_string_array") CSVParams enumQueryStringArray, @Query("enum_query_string") String enumQueryString, @Query("enum_query_integer") Integer enumQueryInteger, @Field("enum_query_double") Double enumQueryDouble
   );
 
 }

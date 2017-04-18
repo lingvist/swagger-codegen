@@ -62,7 +62,7 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
         apiTemplateFiles.put("api-header.mustache", ".h");
         apiTemplateFiles.put("api-source.mustache", ".cpp");
 
-        templateDir = "cpprest";
+        embeddedTemplateDir = templateDir = "cpprest";
 
         cliOptions.clear();
 
@@ -113,6 +113,7 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
         typeMapping.put("file", "HttpContent");
         typeMapping.put("object", "Object");
         typeMapping.put("binary", "std::string");
+        typeMapping.put("number", "double");
 
         super.importMapping = new HashMap<String, String>();
         importMapping.put("std::vector", "#include <vector>");
@@ -217,6 +218,10 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
                 if (methodResponse.getSchema() != null) {
                     CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
                     op.vendorExtensions.put("x-codegen-response", cm);
+                    if(cm.datatype == "HttpContent")
+                    {
+                        op.vendorExtensions.put("x-codegen-response-ishttpcontent", true);
+                    }
                 }
             }
         }
@@ -267,7 +272,8 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
             Property inner = mp.getAdditionalProperties();
             return getSwaggerType(p) + "<utility::string_t, " + getTypeDeclaration(inner) + ">";
         }
-        if (p instanceof StringProperty || p instanceof DateProperty || p instanceof DateTimeProperty
+        if (p instanceof StringProperty || p instanceof DateProperty
+                || p instanceof DateTimeProperty || p instanceof FileProperty
                 || languageSpecificPrimitives.contains(swaggerType)) {
             return toModelName(swaggerType);
         }
@@ -289,7 +295,7 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
             return "0.0";
         } else if (p instanceof FloatProperty) {
             return "0.0f";
-        } else if (p instanceof IntegerProperty) {
+        } else if (p instanceof IntegerProperty || p instanceof BaseIntegerProperty) {
             return "0";
         } else if (p instanceof LongProperty) {
             return "0L";

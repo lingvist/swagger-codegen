@@ -5,13 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-
-
-
+import javax.validation.constraints.*;
 /**
- * Category
+ * A category for a pet
  */
+@ApiModel(description = "A category for a pet")
 
 public class Category   {
   @JsonProperty("id")

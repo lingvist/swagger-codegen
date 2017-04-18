@@ -7,13 +7,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.joda.time.DateTime;
-
-
-
-
+import javax.validation.constraints.*;
 /**
- * Order
+ * An order for a pets from the pet store
  */
+@ApiModel(description = "An order for a pets from the pet store")
 
 public class Order   {
   @JsonProperty("id")

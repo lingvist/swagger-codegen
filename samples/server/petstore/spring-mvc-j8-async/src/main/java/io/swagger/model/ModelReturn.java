@@ -5,13 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-
-
-/**
- * Model for testing reserved words
- **/
-
+import javax.validation.constraints.*;
 /**
  * Model for testing reserved words
  */

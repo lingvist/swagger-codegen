@@ -71,6 +71,7 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
         supportingFiles.add(new SupportingFile("models.mustache", modelPackage().replace('.', File.separatorChar), "models.ts"));
         supportingFiles.add(new SupportingFile("apis.mustache", apiPackage().replace('.', File.separatorChar), "api.ts"));
         supportingFiles.add(new SupportingFile("index.mustache", getIndexDirectory(), "index.ts"));
+        supportingFiles.add(new SupportingFile("configuration.mustache", getIndexDirectory(), "configuration.ts"));
         supportingFiles.add(new SupportingFile("variables.mustache", getIndexDirectory(), "variables.ts"));
         supportingFiles.add(new SupportingFile("gitignore", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
@@ -131,7 +132,7 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
-        if(languageSpecificPrimitives.contains(swaggerType)) {
+        if(isLanguagePrimitive(swaggerType) || isLanguageGenericType(swaggerType)) {
             return swaggerType;
         }
         return addModelPrefix(swaggerType);
@@ -145,15 +146,19 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
             type = swaggerType;
         }
 
-        if (!startsWithLanguageSpecificPrimitiv(type)) {
+        if (!isLanguagePrimitive(type) && !isLanguageGenericType(type)) {
             type = "models." + swaggerType;
         }
         return type;
     }
 
-    private boolean startsWithLanguageSpecificPrimitiv(String type) {
-        for (String langPrimitive:languageSpecificPrimitives) {
-            if (type.startsWith(langPrimitive))  {
+    private boolean isLanguagePrimitive(String type) {
+        return languageSpecificPrimitives.contains(type);
+    }
+
+    private boolean isLanguageGenericType(String type) {
+        for (String genericType: languageGenericTypes) {
+            if (type.startsWith(genericType + "<"))  {
                 return true;
             }
         }

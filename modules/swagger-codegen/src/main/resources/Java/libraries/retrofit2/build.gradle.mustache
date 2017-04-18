@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath 'com.android.tools.build:gradle:2.2.3'
     }
 }
 
@@ -30,10 +30,10 @@ android {
 }
 
 ext {
-    retrofit_version = "2.1.0"
-    swagger_annotations_version = "1.5.8"
+    retrofit_version = "2.2.0"
+    swagger_annotations_version = "1.5.12"
     junit_version = "4.12"
-    jodatime_version = "2.9.3"
+    jodatime_version = "2.9.4"
 }
 
 dependencies {
@@ -41,5 +41,5 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
     compile "io.swagger:swagger-annotations:$swagger_annotations_version"
     compile "joda-time:joda-time:$jodatime_version"
-    testCompile "junit:junit:$junit_version"
 }
+

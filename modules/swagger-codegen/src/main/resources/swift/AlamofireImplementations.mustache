@@ -12,12 +12,37 @@ class AlamofireRequestBuilderFactory: RequestBuilderFactory {
     }
 }
 
+public struct SynchronizedDictionary<K: Hashable, V> {
+
+    private var dictionary = [K: V]()
+    private let queue = dispatch_queue_create("SynchronizedDictionary", DISPATCH_QUEUE_CONCURRENT)
+
+    public subscript(key: K) -> V? {
+        get {
+            var value: V?
+
+            dispatch_sync(queue) {
+                value = self.dictionary[key]
+            }
+
+            return value
+        }
+
+        set {
+            dispatch_barrier_sync(queue) {
+                self.dictionary[key] = newValue
+            }
+        }
+    }
+
+}
+
 // Store manager to retain its reference
-private var managerStore: [String: Alamofire.Manager] = [:]
+private var managerStore = SynchronizedDictionary<String, Alamofire.Manager>()
 
 class AlamofireRequestBuilder<T>: RequestBuilder<T> {
-    required init(method: String, URLString: String, parameters: [String : AnyObject]?, isBody: Bool) {
-        super.init(method: method, URLString: URLString, parameters: parameters, isBody: isBody)
+    required init(method: String, URLString: String, parameters: [String : AnyObject]?, isBody: Bool, headers: [String : String] = [:]) {
+        super.init(method: method, URLString: URLString, parameters: parameters, isBody: isBody, headers: headers)
     }
 
     override func execute(completion: (response: Response<T>?, error: ErrorType?) -> Void) {
@@ -83,7 +108,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
         }
 
         let cleanupRequest = {
-            managerStore.removeValueForKey(managerId)
+            managerStore[managerId] = nil
         }
 
         let validatedRequest = request.validate()

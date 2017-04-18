@@ -43,7 +43,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
 
-        templateDir = "go";
+        embeddedTemplateDir = templateDir = "go";
 
         setReservedWordsLowerCase(
             Arrays.asList(
@@ -165,7 +165,6 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("api_client.mustache", "", "api_client.go"));
         supportingFiles.add(new SupportingFile("api_response.mustache", "", "api_response.go"));
         supportingFiles.add(new SupportingFile(".travis.yml", "", ".travis.yml"));
-        supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
     }
 
     @Override
@@ -181,9 +180,10 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         // - XName
         // - X_Name
         // ... or maybe a suffix?
-        // - Name_ ... think this will work.
-
-        // FIXME: This should also really be a customizable option
+        // - Name_ ... think this will work. 
+        if(this.reservedWordsMappings().containsKey(name)) {
+            return this.reservedWordsMappings().get(name);
+        }        
         return camelize(name) + '_';
     }
 
@@ -414,11 +414,10 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
             }
         }
 
-        // this will only import "strings" "fmt" if there are items in pathParams
+        // this will only import "fmt" if there are items in pathParams
         for (CodegenOperation operation : operations) {
             if(operation.pathParams != null && operation.pathParams.size() > 0) {
                 imports.add(createMapping("import", "fmt"));
-                imports.add(createMapping("import", "strings"));
                 break; //just need to import once
             }
         }
