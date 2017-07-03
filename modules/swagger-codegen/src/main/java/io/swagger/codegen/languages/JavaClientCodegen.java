@@ -188,7 +188,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             additionalProperties.put("gson", "true");
         } else if (usesAnyRetrofitLibrary()) {
 //            supportingFiles.add(new SupportingFile("auth/OAuthOkHttpClient.mustache", authFolder, "OAuthOkHttpClient.java"));
-            supportingFiles.add(new SupportingFile("CollectionFormats.mustache", invokerFolder, "CollectionFormats.java"));
+//            supportingFiles.add(new SupportingFile("CollectionFormats.mustache", invokerFolder, "CollectionFormats.java"));
             additionalProperties.put("gson", "true");
         } else if("jersey2".equals(getLibrary())) {
             supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));

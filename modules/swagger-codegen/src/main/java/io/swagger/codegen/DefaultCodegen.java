@@ -2364,10 +2364,10 @@ public class DefaultCodegen {
                     inner = new StringProperty().description("//TODO automatically added by swagger-codegen");
                 }
                 property = new ArrayProperty(inner);
-                collectionFormat = qp.getCollectionFormat();
-                if (collectionFormat == null) {
-                    collectionFormat = "csv";
-                }
+//                collectionFormat = qp.getCollectionFormat();
+//                if (collectionFormat == null) {
+                    collectionFormat = "multi";
+//                }
                 CodegenProperty pr = fromProperty("inner", inner);
                 p.items = pr;
                 p.baseType = pr.datatype;
