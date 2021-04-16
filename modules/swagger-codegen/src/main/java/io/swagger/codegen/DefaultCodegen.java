@@ -814,6 +814,8 @@ public class DefaultCodegen {
         typeMapping.put("UUID", "String");
         typeMapping.put("SequenceNumber", "Long");
         typeMapping.put("LingvistURN", "String");
+        typeMapping.put("Monetary", "String");
+        typeMapping.put("Currency", "String");
 
         instantiationTypes = new HashMap<String, String>();
 
